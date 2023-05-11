@@ -1,6 +1,5 @@
-<div *ngIf="currency && balance">
+<div class="balance-container" *ngIf="currency && balance">
   <h2>Your balance</h2>
-  <p>{{ currency }} {{ balance }}</p>
+  <h1>{{ currency }} {{ balance }}</h1>
+  <button mat-raised-button color="primary" (click)="updateBalance()">Update Balance</button>
 </div>
-
-<button mat-raised-button (click)="updateBalance()">Update Balance</button>
