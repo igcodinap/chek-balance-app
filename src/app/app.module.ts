@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { BalanceComponent } from './balance/balance.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -31,8 +32,8 @@ import { FormsModule } from '@angular/forms';
       config: {
         // could have been a declared function, still thinking about it
         tokenGetter: () => localStorage.getItem('access_token'),
-        allowedDomains: ['localhost:3000'],
-        disallowedRoutes: ['localhost:3000/auth/login'],
+        allowedDomains: [environment.apiDomain],
+        disallowedRoutes: [`${environment.apiBaseUrl}/auth/login`],
       },
     }),
   ],
