@@ -1,17 +1,11 @@
-FROM node:18.15.0 as build
-
-WORKDIR /source
-
-# Copy the package lock file into the container
-COPY package*.json ./
-# Run ci only for the production dependencies
+# Stage 1: Compile Angular Application
+FROM node:18.15.0 AS compile-image
+WORKDIR /opt/ng
+COPY package.json package-lock.json ./
 RUN npm ci
+COPY . ./
+RUN npm run build --omit=dev
 
-# Copy the rest of the files into the container and build
-COPY . .
-RUN npm run build -prod
-
+# Stage 2: Serve Angular Application via Nginx
 FROM nginx:alpine
-COPY -from=build /source/dist/todo /usr/share/nginx/html
-COPY -from=build /source/nginx.conf /etc/nginx/conf.d/
-EXPOSE 8080
+COPY --from=compile-image /opt/ng/dist/chek-balance-app /usr/share/nginx/html
