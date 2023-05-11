@@ -13,7 +13,6 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe({
       // gotta work in this any, not the best practice
       next: (payload: any) => {
-        console.log('Login successful', payload.user);
         localStorage.setItem('access_token', payload.user.jwt_token);
         this.authService.navigateToBalance();
       },

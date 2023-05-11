@@ -13,9 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string): Observable<string> {
-    console.log('login executed')
     const request = this.http.post<string>(`${environment.apiBaseUrl}/auth/login`, { email, password });
-    console.log(request, 'request')
     return request;
   }
 
@@ -25,7 +23,6 @@ export class AuthService {
 
   //should take this to other file
   getBalance(): Observable<{ currency: string; balance: number }> {
-    console.log('getBalance executed')
     return this.http.get<{ currency: string; balance: number }>(`${environment.apiBaseUrl}/wallet/balance`);
   }
 }
