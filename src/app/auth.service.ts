@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+// name also wip
 export class AuthService {
   //wip, later to env var
   private apiBaseUrl = 'http://localhost:3000';

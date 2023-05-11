@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
+import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
@@ -26,6 +27,14 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     FormsModule,
+    JwtModule.forRoot({
+      config: {
+        // could have been a declared function, still thinking about it
+        tokenGetter: () => localStorage.getItem('access_token'),
+        allowedDomains: ['localhost:3000'],
+        disallowedRoutes: ['localhost:3000/auth/login'],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
