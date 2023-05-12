@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
-
+import { firstValueFrom } from 'rxjs';
+import { WalletService } from '../services/wallet.service';
 @Component({
   selector: 'app-balance',
   templateUrl: './balance.component.html',
@@ -10,7 +10,7 @@ export class BalanceComponent {
   currency!: string;
   balance!: number;
 
-  constructor(private authService: AuthService) {}
+  constructor(private walletService: WalletService) {}
 
   ngOnInit(): void {
     this.fetchBalance();
@@ -20,17 +20,13 @@ export class BalanceComponent {
     this.fetchBalance();
   }
 
-  private fetchBalance(): void {
-    // suscribe is deprecated, need to use pipe
-    this.authService.getBalance().subscribe(
-      (data) => {
-        this.currency = data.currency;
-        this.balance = data.balance;
-      },
-      (error) => {
-        console.error('Failed to fetch balance', error);
-      }
-    );
+  private async fetchBalance(): Promise<void> {
+    try {
+      const data = await firstValueFrom(this.walletService.getBalance());
+      this.currency = data.currency;
+      this.balance = data.balance;
+    } catch (error) {
+      console.error('Failed to fetch balance', error);
+    }
   }
-
 }
